@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
-export default defineNuxtConfig({
+import type { NuxtConfig } from "@nuxt/types";
+
+const config: NuxtConfig = {
   app: {
     head: {
       title: "梁子王",
@@ -26,4 +28,10 @@ export default defineNuxtConfig({
     redirect: false,
   },
   compatibilityDate: "2025-04-07",
-});
+  //@ts-ignore
+  router: {
+    middleware: ["auth.global.ts"],
+  },
+};
+
+export default config;
