@@ -4,9 +4,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    if (!user) {
-      return navigateTo("/login");
-    }
+    // if (!user) {
+    //   return navigateTo("/login");
+    // }
   } catch (error) {
     console.error("Error in auth middleware:", error);
     return navigateTo("/error"); // Optional: Redirect to an error page

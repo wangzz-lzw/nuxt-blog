@@ -48,7 +48,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { useSupabaseClient } from "#imports";
 import { useRouter } from "vue-router";
 import type { Article } from "~/types/article";
 

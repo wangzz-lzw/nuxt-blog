@@ -18,7 +18,6 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useSupabaseClient } from "#imports";
 import { useRouter } from "vue-router";
 
 const email = ref("");
