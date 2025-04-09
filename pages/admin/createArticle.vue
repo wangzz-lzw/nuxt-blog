@@ -27,8 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useSupabaseClient } from "#imports";
 import MarkdownEditor from "@/components/markdown/index.vue";
 import { toast } from "vue-sonner";
 definePageMeta({
