@@ -21,12 +21,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         }
       }
 
-      const publicRoutes = ["/login", "/register", "/"];
+      const publicRoutes = ["/login", "/register", "/", "/about", "blog"];
 
-      if (
-        !session &&
-        (!publicRoutes.includes(to.path) || !to.path.includes("admin"))
-      ) {
+      if (!session && !publicRoutes.includes(to.path)) {
         return navigateTo("/login");
       }
 
