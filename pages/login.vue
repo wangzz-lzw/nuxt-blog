@@ -35,6 +35,14 @@
         登录
       </Button>
     </form>
+    <div class="mt-6 text-center">
+      <Button
+        @click="handleGitHubLogin"
+        class="w-full py-2 bg-gray-800 text-white font-semibold rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800"
+      >
+        使用 GitHub 登录
+      </Button>
+    </div>
     <p v-if="error" class="text-center text-red-500 mt-4">{{ error }}</p>
   </div>
 </template>
@@ -60,6 +68,16 @@ const handleLogin = async () => {
     error.value = signInError.message;
   } else {
     router.push("/");
+  }
+};
+
+const handleGitHubLogin = async () => {
+  const { error: githubError } = await supabase.auth.signInWithOAuth({
+    provider: "github",
+  });
+
+  if (githubError) {
+    error.value = githubError.message;
   }
 };
 </script>
