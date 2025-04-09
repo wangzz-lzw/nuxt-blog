@@ -25,7 +25,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
       if (
         !session &&
-        (!publicRoutes.includes(to.path) || to.path.includes("admin"))
+        (!publicRoutes.includes(to.path) || !to.path.includes("admin"))
       ) {
         return navigateTo("/login");
       }
