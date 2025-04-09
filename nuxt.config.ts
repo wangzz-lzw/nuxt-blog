@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 import type { NuxtConfig } from "@nuxt/types";
-
 const config: NuxtConfig = {
   app: {
     head: {
@@ -11,7 +10,6 @@ const config: NuxtConfig = {
       },
     },
   },
-
   css: ["~/assets/css/tailwind.css"],
   devtools: { enabled: true },
 

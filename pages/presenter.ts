@@ -13,7 +13,10 @@ export const usePresenter = () => {
   models.mainModel = MainModel();
 
   useCases.getArticles = async () => {
-    const { data } = await supabase.from("articles").select("*");
+    const { data } = await supabase
+      .from("articles")
+      .select("*")
+      .eq("star", "1");
     models.mainModel!.articles.value = data!;
   };
 

@@ -20,7 +20,7 @@
           class="border border-gray-300 rounded-md"
         />
       </div>
-      <Button> 发布文章 </Button>
+      <Button :loading="submitloading"> 发布文章 </Button>
     </form>
     <p v-if="error" class="text-center text-red-500 mt-4">{{ error }}</p>
   </div>
@@ -31,18 +31,32 @@ import { ref } from "vue";
 import { useSupabaseClient } from "#imports";
 import MarkdownEditor from "@/components/markdown/index.vue";
 import { toast } from "vue-sonner";
+definePageMeta({
+  layout: "admin",
+});
 const title = ref("");
 const content = ref("");
 const error = ref<string | null>(null);
 const router = useRouter();
 
-const supabase = useSupabaseClient();
+interface Article {
+  title: string;
+  content: string;
+}
+
+const supabase = useSupabaseClient<{ articles: Article }>();
+const submitloading = ref(false);
+interface Article {
+  title: string;
+  content: string;
+}
 
 const handleCreateArticle = async () => {
+  submitloading.value = true;
   try {
     const { error: insertError } = await supabase
       .from("articles")
-      .insert([{ title: title.value, content: content.value }]);
+      .insert<Article>({ title: title.value, content: content.value });
 
     if (insertError) {
       error.value = insertError.message;
@@ -58,6 +72,7 @@ const handleCreateArticle = async () => {
     error.value = "发布文章时出错，请稍后再试。";
     console.error(err);
   }
+  submitloading.value = false;
 };
 </script>
 

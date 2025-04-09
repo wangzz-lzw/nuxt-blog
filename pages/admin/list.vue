@@ -18,8 +18,8 @@
           }}</TableCell>
           <TableCell class="text-center">
             <Checkbox
-              :checked="article.star === '1'"
-              @change="toggleStar(article.id, !article.star)"
+              :model-value="article.star === '1'"
+              @update:model-value="toggleStar(article.id, article.star)"
               class="cursor-pointer"
             />
           </TableCell>
@@ -51,10 +51,14 @@ import { ref, onMounted } from "vue";
 import { useSupabaseClient } from "#imports";
 import { useRouter } from "vue-router";
 import type { Article } from "~/types/article";
-
+// 指定使用admin布局
+definePageMeta({
+  layout: "admin",
+});
 const articles = ref<Article[]>([]);
 const error = ref<string | null>(null);
-const supabase = useSupabaseClient();
+
+const supabase = useSupabaseClient<{ articles: Article }>();
 const router = useRouter();
 
 const fetchArticles = async () => {
@@ -104,7 +108,7 @@ const toggleStar = async (id: number, star: string) => {
   try {
     const { error: updateError } = await supabase
       .from("articles")
-      .update({ star })
+      .update<{ star: string }>({ star: star === "1" ? "2" : "1" })
       .eq("id", id);
 
     if (updateError) {
@@ -112,7 +116,7 @@ const toggleStar = async (id: number, star: string) => {
     } else {
       const article = articles.value.find((article) => article.id === id);
       if (article) {
-        article.star = star;
+        article.star = star === "1" ? "2" : "1";
       }
     }
   } catch (err) {
