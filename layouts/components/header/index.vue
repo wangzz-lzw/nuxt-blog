@@ -18,7 +18,7 @@
       </NuxtLink>
     </div>
 
-    <div class="flex items-center gap-2" v-if="presenter.mainModel?.user?.id">
+    <div class="flex items-center gap-2" v-if="!presenter.mainModel?.user?.id">
       <Button>
         <NuxtLink to="/login" class="hover:bg-[var(--primary)]/60"
           >登陆</NuxtLink
