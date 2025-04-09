@@ -24,6 +24,12 @@ const config: NuxtConfig = {
   },
   supabase: {
     redirect: false,
+    persistSession: true,
+    cookieOptions: {
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: "lax",
+      secure: true,
+    },
   },
   compatibilityDate: "2025-04-07",
   //@ts-ignore

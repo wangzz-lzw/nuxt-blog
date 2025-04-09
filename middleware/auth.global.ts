@@ -1,15 +1,38 @@
+import Cookies from "js-cookie";
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  try {
-    const supabase = useSupabaseClient();
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    console.log(session, "session");
-    // if (!user) {
-    //   return navigateTo("/login");
-    // }
-  } catch (error) {
-    console.error("Error in auth middleware:", error);
-    return navigateTo("/error"); // Optional: Redirect to an error page
+  const supabase = useSupabaseClient();
+  if (!Cookies.get("user")) {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      // 额外验证 session 是否有效
+      if (session) {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+        Cookies.set("user", JSON.stringify(user));
+        if (error || !user) {
+          // session 无效，清除它
+          await supabase.auth.signOut();
+          return navigateTo("/login");
+        }
+      }
+
+      const publicRoutes = ["/login", "/register", "/"];
+
+      if (!session && !publicRoutes.includes(to.path)) {
+        return navigateTo("/login");
+      }
+
+      if (session && to.path === "/login") {
+        return navigateTo("/");
+      }
+    } catch (error) {
+      console.error("Error in auth middleware:", error);
+      return navigateTo("/error");
+    }
   }
 });

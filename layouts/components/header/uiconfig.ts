@@ -5,7 +5,7 @@ export const useUiConfig = () => {
     // { name: '联系', path: '/contact' },
     { name: "文章", path: "/blog" },
     // {name:'资源', path: '/resource'}
-    { name: "后台", path: "/admin/list" },
+    { name: "后台", path: "/admin/list", role: ["admin", "authenticated"] },
   ];
   return {
     menus,
