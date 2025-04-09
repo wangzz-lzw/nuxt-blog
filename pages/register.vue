@@ -1,18 +1,30 @@
 <template>
-  <div class="register">
-    <h1>注册</h1>
-    <form @submit.prevent="handleRegister">
+  <div class="max-w-md mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-center text-2xl font-semibold text-gray-800 mb-6">注册</h1>
+    <form @submit.prevent="handleRegister" class="space-y-4">
       <div>
-        <label for="email">邮箱</label>
-        <input v-model="email" type="email" id="email" required />
+        <Label for="email">邮箱</Label>
+        <Input
+          v-model="email"
+          type="email"
+          id="email"
+          placeholder="请输入邮箱"
+          required
+        />
       </div>
       <div>
-        <label for="password">密码</label>
-        <input v-model="password" type="password" id="password" required />
+        <Label for="password">密码</Label>
+        <Input
+          v-model="password"
+          type="password"
+          id="password"
+          placeholder="请输入密码"
+          required
+        />
       </div>
-      <button type="submit">注册</button>
+      <Button type="submit" class="w-full">注册</Button>
     </form>
-    <p v-if="error">{{ error }}</p>
+    <p v-if="error" class="mt-4 text-center text-red-500">{{ error }}</p>
   </div>
 </template>
 
@@ -41,6 +53,4 @@ const handleRegister = async () => {
 };
 </script>
 
-<style scoped>
-/* 样式代码 */
-</style>
+<style scoped></style>
